@@ -1,0 +1,291 @@
+[
+  {
+    "card_name": "玉山 Unicard",
+    "bank": "玉山銀行",
+    "valid_period": "2026/01/01 - 2026/12/31 (下半年持續展延)",
+    "period_tag": "2026全年/下半年",
+    "channels": [
+      {
+        "channel_name": "LINE Pay / 街口支付 / 悠遊付",
+        "keywords": ["line pay", "linepay", "街口", "街口支付", "悠遊付", "行動支付"],
+        "cashback_rate": 4.5,
+        "cashback_display": "最高 4.5% e point",
+        "is_new_customer_only": false,
+        "cap": "指定百大特店最高 4.5%（特選 3.5% + UP選 4.5%），每月加碼上限 500~2000 點",
+        "condition": "需使用玉山 Wallet 綁定並切換方案；排除新戶加碼，舊戶卡友皆可享有。"
+      },
+      {
+        "channel_name": "日本/韓國/海外實體消費",
+        "keywords": ["日本", "韓國", "國外", "海外", "日幣", "韓幣", "國外實體", "bic camera", "唐吉訶德"],
+        "cashback_rate": 4.5,
+        "cashback_display": "4.5% (海外實體消費)",
+        "is_new_customer_only": false,
+        "cap": "每月加碼上限 1,000 點（可刷約 2.8 萬）",
+        "condition": "海外實體店面切換百大特店專案，扣除 1.5% 交易手續費後淨賺 3.0%"
+      },
+      {
+        "channel_name": "蝦皮購物 / momo / PChome / 酷澎",
+        "keywords": ["蝦皮", "shopee", "momo", "pchome", "網購", "網路購物", "酷澎", "coupang"],
+        "cashback_rate": 3.5,
+        "cashback_display": "3.5% e point",
+        "is_new_customer_only": false,
+        "cap": "每期回饋上限 500 點",
+        "condition": "任意選/UP選通路，非新戶享 3.5%"
+      },
+      {
+        "channel_name": "國內一般消費無腦刷",
+        "keywords": ["國內一般", "一般消費", "無腦刷", "隨便", "無腦", "實體刷卡", "國內"],
+        "cashback_rate": 1.0,
+        "cashback_display": "1.0% 無上限",
+        "is_new_customer_only": false,
+        "cap": "回饋無上限",
+        "condition": "綁定玉山帳戶自動扣繳，舊戶人人享有無腦 1% 點數無上限"
+      }
+    ],
+    "source_url": "https://www.fuma.me/2017/12/creditcard-cash-back-top.html",
+    "source_blog": "符碼記憶"
+  },
+  {
+    "card_name": "台新 GoGo卡",
+    "bank": "台新銀行",
+    "valid_period": "2026/06/01 - 2026/11/30 (2026下半年最新權益)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "街口支付 / 台新Pay / 全盈+PAY",
+        "keywords": ["街口", "街口支付", "台新pay", "全盈", "超商", "7-11", "全家"],
+        "cashback_rate": 3.8,
+        "cashback_display": "3.8% 台新Point",
+        "is_new_customer_only": false,
+        "cap": "每期帳單加碼上限 1,000 點（可刷 $30,303）",
+        "condition": "需使用數位帳單並設定 Richart 帳戶自動扣繳（已排除新戶首刷禮）"
+      },
+      {
+        "channel_name": "蝦皮 / momo / PChome / 酷澎網購",
+        "keywords": ["蝦皮", "momo", "pchome", "酷澎", "網購", "購物"],
+        "cashback_rate": 3.8,
+        "cashback_display": "3.8% 台新Point",
+        "is_new_customer_only": false,
+        "cap": "加碼上限 1,000 點/月",
+        "condition": "數位帳單 + Richart 自動扣款即享，既有卡友標準回饋"
+      }
+    ],
+    "source_url": "https://www.beurlife.com/2026/01/best-credit-card-cash-back.html",
+    "source_blog": "這就是人生"
+  },
+  {
+    "card_name": "國泰世華 CUBE卡",
+    "bank": "國泰世華",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年權益更新)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "日本/韓國/海外消費 (趣旅行)",
+        "keywords": ["日本", "韓國", "海外", "國外", "日幣", "韓元", "機場", "機票", "飯店", "agoda", "booking"],
+        "cashback_rate": 3.3,
+        "cashback_display": "3.3% 小樹點(信用卡) 無上限",
+        "is_new_customer_only": false,
+        "cap": "無上限！適合大額刷卡",
+        "condition": "切換為「趣旅行」權益，不限新舊戶，海外實體或機票皆享 3.3% 無上限"
+      },
+      {
+        "channel_name": "蝦皮 / momo / 酷澎 / 博客來 (玩數位)",
+        "keywords": ["蝦皮", "momo", "酷澎", "網購", "網路購物", "博客來"],
+        "cashback_rate": 3.0,
+        "cashback_display": "3.0% 小樹點 無上限",
+        "is_new_customer_only": false,
+        "cap": "無上限",
+        "condition": "消費當日需切換「玩數位」權益"
+      },
+      {
+        "channel_name": "中油直營 / Uber Eats / 高鐵 / 捷運 (集精選)",
+        "keywords": ["中油", "加油", "uber", "uber eats", "外送", "高鐵", "台鐵", "計程車"],
+        "cashback_rate": 3.0,
+        "cashback_display": "3.0% 小樹點",
+        "is_new_customer_only": false,
+        "cap": "無上限",
+        "condition": "切換指定權益方案，舊戶同享無上限回饋"
+      },
+      {
+        "channel_name": "國內一般消費",
+        "keywords": ["國內一般", "一般消費", "無腦刷", "隨便", "無腦"],
+        "cashback_rate": 0.3,
+        "cashback_display": "0.3% 基本回饋無上限",
+        "is_new_customer_only": false,
+        "cap": "無上限",
+        "condition": "一般消費底層回饋"
+      }
+    ],
+    "source_url": "https://www.fuma.me/2017/12/creditcard-cash-back-top.html",
+    "source_blog": "符碼記憶"
+  },
+  {
+    "card_name": "永豐 SPORT卡",
+    "bank": "永豐銀行",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "Apple Pay / Google Pay 行動感應支付",
+        "keywords": ["apple pay", "google pay", "ap", "gp", "感應支付", "實體刷卡", "手機感應"],
+        "cashback_rate": 6.0,
+        "cashback_display": "最高 6.0% 豐點",
+        "is_new_customer_only": false,
+        "cap": "加碼 5% 每月上限 300 點（可刷 $6,000）",
+        "condition": "每月運動燃燒 7,000 卡路里或運動 10 天，舊戶綁定 Apple Pay / Google Pay 即享 6%（非新戶限定）"
+      }
+    ],
+    "source_url": "https://www.fuma.me/2017/12/creditcard-cash-back-top.html",
+    "source_blog": "符碼記憶"
+  },
+  {
+    "card_name": "聯邦 吉鶴卡",
+    "bank": "聯邦銀行",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年續約)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "日本在地實體店家 (QUICPay / 實體卡)",
+        "keywords": ["日本", "日本實體", "quicpay", "apple pay 日本", "唐吉訶德", "bic camera", "日幣"],
+        "cashback_rate": 4.0,
+        "cashback_display": "最高 4.0% 現金回饋",
+        "is_new_customer_only": false,
+        "cap": "日本實體一般 2.5% 無上限 + Apple Pay 綁定 QUICPay 加碼 1.5%（加碼上限每月 1,000 元）",
+        "condition": "已排除新戶首刷禮加碼；舊卡友在日本使用 Apple Pay 感應 QUICPay 享 4.0%"
+      },
+      {
+        "channel_name": "國內日系名店 (Uniqlo/無印良品/宜得利/大創/壽司郎/藏壽司)",
+        "keywords": ["uniqlo", "無印良品", "宜得利", "大創", "壽司郎", "藏壽司", "日系品牌"],
+        "cashback_rate": 4.0,
+        "cashback_display": "4.0% 現金回饋",
+        "is_new_customer_only": false,
+        "cap": "活動加碼每月上限 500 元",
+        "condition": "持卡直接刷卡即享加碼，免登錄，舊戶同享"
+      }
+    ],
+    "source_url": "https://www.beurlife.com/2026/01/best-credit-card-cash-back.html",
+    "source_blog": "這就是人生"
+  },
+  {
+    "card_name": "富邦 J卡",
+    "bank": "台北富邦",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "日韓實體消費",
+        "keywords": ["日本", "韓國", "日韓", "日幣", "韓元", "日本實體", "驚安殿堂"],
+        "cashback_rate": 6.0,
+        "cashback_display": "最高 6.0% (3%無上限 + 指定日韓通路加碼3%)",
+        "is_new_customer_only": false,
+        "cap": "日韓一般消費 3% LINE POINTS 無上限；指定便利商店/藥妝加碼 3% 每季上限 600 點",
+        "condition": "已完全扣除新戶 2% 加碼（新戶最高號稱 10%，此處僅列既有卡友真實可拿 6%）"
+      },
+      {
+        "channel_name": "LINE Pay 國內消費",
+        "keywords": ["line pay", "linepay", "國內 line pay"],
+        "cashback_rate": 1.0,
+        "cashback_display": "1.0% LINE POINTS 無上限",
+        "is_new_customer_only": false,
+        "cap": "無上限",
+        "condition": "綁定富邦帳戶扣繳"
+      }
+    ],
+    "source_url": "https://www.beurlife.com/2026/01/best-credit-card-cash-back.html",
+    "source_blog": "這就是人生"
+  },
+  {
+    "card_name": "上海商業銀行 小小兵卡 (BEE DO卡)",
+    "bank": "上海商銀",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "全聯 / 超商 7-11 / 全家 / 繳費",
+        "keywords": ["全聯", "7-11", "全家", "超商", "繳費", "水電費", "瓦斯費", "路邊停車", "萊爾富"],
+        "cashback_rate": 5.0,
+        "cashback_display": "5.0% 現金回饋",
+        "is_new_customer_only": false,
+        "cap": "指定生活通路加碼每月上限 200 元（可刷 $4,000）",
+        "condition": "綁定自動扣繳與電子帳單，舊戶同享 5% 繳費神回饋"
+      },
+      {
+        "channel_name": "全球主題樂園 (迪士尼/環球影城)",
+        "keywords": ["迪士尼", "環球影城", "樂園", "日本環球", "東京迪士尼"],
+        "cashback_rate": 10.0,
+        "cashback_display": "10.0% 現金回饋",
+        "is_new_customer_only": false,
+        "cap": "每月上限 500 元（可刷 $5,000）",
+        "condition": "全球指定樂園門票購票回饋，非新戶限定"
+      }
+    ],
+    "source_url": "https://www.beurlife.com/2026/02/scsb_minions_credit_card.html",
+    "source_blog": "這就是人生"
+  },
+  {
+    "card_name": "永豐 大戶 DAWHO 信用卡",
+    "bank": "永豐銀行",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "外送 (Uber Eats/Foodpanda) / 旅行 (機票/飯店) / 影音 (Netflix/Spotify)",
+        "keywords": ["外送", "uber eats", "foodpanda", "netflix", "spotify", "disney+", "影音", "機票", "飯店", "訂房"],
+        "cashback_rate": 7.0,
+        "cashback_display": "國內最高 7.0% / 國外最高 8.0%",
+        "is_new_customer_only": false,
+        "cap": "大戶等級加碼 5% 上限每月 300 元",
+        "condition": "大戶數位帳戶平均資產需達 10 萬元升級「大戶」等級；舊卡友常態享有，已排除新戶首刷"
+      },
+      {
+        "channel_name": "悠遊卡自動加值",
+        "keywords": ["悠遊卡", "自動加值", "捷運", "公車", "加值"],
+        "cashback_rate": 5.0,
+        "cashback_display": "5.0% 現金回饋",
+        "is_new_customer_only": false,
+        "cap": "每期帳單上限 300 元",
+        "condition": "完成大戶資產任務"
+      }
+    ],
+    "source_url": "https://www.fuma.me/2017/12/creditcard-cash-back-top.html",
+    "source_blog": "符碼記憶"
+  },
+  {
+    "card_name": "遠東 樂家+卡",
+    "bank": "遠東商銀",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "加油 / 餐廳 / 寵物 / 健身房",
+        "keywords": ["加油", "中油", "全國加油", "台亞", "餐廳", "吃飯", "餐飲", "寵物", "寵物公園", "健身房", "world gym"],
+        "cashback_rate": 5.0,
+        "cashback_display": "5.0% 現金回饋",
+        "is_new_customer_only": false,
+        "cap": "指定生活通路每期上限 350 元（可刷 $7,000）",
+        "condition": "設定遠銀帳戶自動扣繳即享 5%，非新戶限定活動"
+      }
+    ],
+    "source_url": "https://www.beurlife.com/2026/01/best-credit-card-cash-back.html",
+    "source_blog": "這就是人生"
+  },
+  {
+    "card_name": "國泰世華 蝦皮聯名卡",
+    "bank": "國泰世華",
+    "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
+    "period_tag": "2026下半年",
+    "channels": [
+      {
+        "channel_name": "蝦皮購物站內消費 (大促日加碼)",
+        "keywords": ["蝦皮", "shopee", "蝦皮購物", "大促日", "免運"],
+        "cashback_rate": 10.0,
+        "cashback_display": "最高 10.0% 蝦幣",
+        "is_new_customer_only": false,
+        "cap": "平日 4% 蝦幣無上限；每月大促促銷日加碼至 10%，加碼上限 1,000 蝦幣",
+        "condition": "已排除新卡首刷贈送之蝦幣，此為既有卡友之促銷日消費標準回饋率，外加每月免運券"
+      }
+    ],
+    "source_url": "https://www.fuma.me/feeds/posts/default",
+    "source_blog": "符碼記憶"
+  }
+]
