@@ -26,7 +26,19 @@
         .header-left { display: flex; align-items: center; gap: 12px; }
         .back-btn { background: #334155; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
         .back-btn:hover { background: #475569; }
-        .save-banner { background: #064e3b; color: #a7f3d0; border: 1px solid #059669; padding: 10px 16px; border-radius: 8px; margin: 16px; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; }
+        
+        .sync-card { background: #182234; border: 1px solid #10b981; border-radius: 12px; margin: 16px; padding: 16px; }
+        .sync-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .sync-title { font-weight: bold; color: #34d399; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .sync-input-row { display: flex; gap: 8px; margin-top: 8px; }
+        .sync-input-row input { flex: 1; background: #0f172a; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; color: white; font-size: 0.88rem; outline: none; }
+        .sync-btn { background: #059669; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.88rem; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .sync-btn:hover { background: #10b981; }
+        .sync-pull-btn { background: #334155; color: #93c5fd; border: 1px solid #3b82f6; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.88rem; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .sync-pull-btn:hover { background: #1e293b; color: white; }
+        .sync-help-text { font-size: 0.78rem; color: #94a3b8; margin-top: 8px; line-height: 1.4; }
+        
+        .save-banner { background: #064e3b; color: #a7f3d0; border: 1px solid #059669; padding: 10px 16px; border-radius: 8px; margin: 0 16px 12px 16px; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; }
         .quick-toggle-bar { padding: 0 16px 12px 16px; display: flex; gap: 10px; }
         .quick-toggle-bar button { background: #334155; color: #cbd5e1; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
         .quick-toggle-bar button:hover { background: #475569; color: white; }
@@ -59,14 +71,32 @@
                 <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> 回到對話</a>
                 <div>
                     <h2>⚙️ 我的卡片與特別權益設定</h2>
-                    <p style="font-size:0.8rem; color:var(--text-muted);">勾選你擁有的卡片，並設定會員等級或登錄活動！</p>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">勾選卡片、設定會員等級，並支援 Google Sheet 跨裝置同步！</p>
                 </div>
             </div>
             <button class="save-btn" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> 儲存設定</button>
         </header>
 
+        <!-- Google Sheet 雲端同步區塊 -->
+        <section class="sync-card">
+            <div class="sync-header">
+                <div class="sync-title">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Google Sheet 跨裝置雲端同步
+                </div>
+                <span id="sync-status" style="font-size:0.75rem; color:#94a3b8;">未連結雲端</span>
+            </div>
+            <div class="sync-input-row">
+                <input type="url" id="sheet-api-url" placeholder="貼上你的 Google Apps Script 網頁應用程式網址 (https://script.google.com/.../exec)">
+                <button class="sync-btn" onclick="saveToCloud()"><i class="fa-solid fa-cloud"></i> 備份上雲端</button>
+                <button class="sync-pull-btn" onclick="loadFromCloud()"><i class="fa-solid fa-cloud-arrow-down"></i> 從雲端讀取</button>
+            </div>
+            <div class="sync-help-text">
+                💡 <strong>如何連結 Google Sheet？</strong> 建立 Google Sheet ➡️ 點選「擴充功能」->「Apps Script」貼入專案提供的腳本 ➡️ 部署為網頁應用程式並將產生的網址貼在上方，手機或任何電腦就能隨時互通同步！
+            </div>
+        </section>
+
         <div class="save-banner" id="save-banner" style="display:none;">
-            <span><i class="fa-solid fa-circle-check"></i> 設定已成功儲存至手機瀏覽器！回到對話時將優先推薦你的持卡。</span>
+            <span id="banner-text"><i class="fa-solid fa-circle-check"></i> 設定已成功儲存！回到對話時將優先推薦你的持卡。</span>
         </div>
 
         <div class="quick-toggle-bar">
@@ -90,8 +120,8 @@
     <script>
         let CARDS = [];
         const STORAGE_KEY = 'user_card_settings_v1';
+        const SHEET_API_KEY = 'google_sheet_api_url_v1';
 
-        // 讀取既有設定或預設全選
         function getUserSettings() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
@@ -101,6 +131,13 @@
         }
 
         async function init() {
+            // 讀取既有儲存的 Google Sheet 網址
+            const savedUrl = localStorage.getItem(SHEET_API_KEY);
+            if (savedUrl) {
+                document.getElementById('sheet-api-url').value = savedUrl;
+                document.getElementById('sync-status').innerHTML = '<span style="color:#10b981;">● 已綁定 Google Sheet</span>';
+            }
+
             try {
                 const res = await fetch('data/cards.json');
                 CARDS = await res.json();
@@ -117,13 +154,11 @@
 
             CARDS.forEach(card => {
                 const cardId = card.card_id || card.card_name;
-                const isSelected = saved[cardId] ? saved[cardId].owned : true; // 預設全選
+                const isSelected = saved[cardId] ? saved[cardId].owned : true;
                 const userTier = saved[cardId]?.tierId || (card.special_tier_options ? card.special_tier_options[0].id : '');
                 
-                // 通路預覽
                 const chNames = (card.channels || []).map(c => `${c.channel_name} (${c.cashback_display})`).join('、');
 
-                // 會員等級 / 特別權益選項 HTML
                 let tierHtml = '';
                 if (card.special_tier_options && card.special_tier_options.length > 0) {
                     tierHtml = `
@@ -139,7 +174,6 @@
                     </div>`;
                 }
 
-                // 登錄活動與官網連結
                 let eventHtml = '';
                 if (card.registration_events && card.registration_events.length > 0) {
                     eventHtml = `
@@ -201,7 +235,7 @@
             selectAll(true);
         }
 
-        function saveSettings() {
+        function collectCurrentSettings() {
             const settings = {};
             CARDS.forEach(card => {
                 const cardId = card.card_id || card.card_name;
@@ -213,14 +247,91 @@
                     tierId: tierSelect ? tierSelect.value : null
                 };
             });
+            return settings;
+        }
 
+        function saveSettings() {
+            const settings = collectCurrentSettings();
             localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+            // 如果有設定 Google Sheet 網址，自動背景同步上傳
+            const apiUrl = document.getElementById('sheet-api-url').value.trim();
+            if (apiUrl) {
+                localStorage.setItem(SHEET_API_KEY, apiUrl);
+                saveToCloudSilently(apiUrl, settings);
+            }
             
-            const banner = document.getElementById('save-banner');
-            banner.style.display = 'flex';
+            showBanner('✅ 設定已成功儲存至本機！正在跳轉回對話...');
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 800);
+        }
+
+        async function saveToCloudSilently(apiUrl, settings) {
+            try {
+                await fetch(apiUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ settings: settings, device: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop' })
+                });
+            } catch (e) {}
+        }
+
+        async function saveToCloud() {
+            const apiUrl = document.getElementById('sheet-api-url').value.trim();
+            if (!apiUrl) {
+                alert('請先輸入 Google Apps Script 網頁應用程式網址！');
+                return;
+            }
+            localStorage.setItem(SHEET_API_KEY, apiUrl);
+            const settings = collectCurrentSettings();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+            showBanner('⏳ 正在同步上傳至你的 Google Sheet...');
+            try {
+                await fetch(apiUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ settings: settings, device: 'ManualBackup' })
+                });
+                document.getElementById('sync-status').innerHTML = '<span style="color:#10b981;">● 雲端已同步更新</span>';
+                showBanner('☁️ 成功備份至你的 Google Sheet！其他設備貼上同一網址即可秒同步！');
+            } catch (e) {
+                alert('上傳失敗，請確認網址是否正確及權限設定為「任何人」。');
+            }
+        }
+
+        async function loadFromCloud() {
+            const apiUrl = document.getElementById('sheet-api-url').value.trim();
+            if (!apiUrl) {
+                alert('請先輸入 Google Apps Script 網址！');
+                return;
+            }
+            localStorage.setItem(SHEET_API_KEY, apiUrl);
+            showBanner('⏳ 正在從你的 Google Sheet 讀取最新設定...');
+
+            try {
+                const res = await fetch(apiUrl);
+                const result = await res.json();
+                if (result.status === 'success' && result.data) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(result.data));
+                    renderCards();
+                    document.getElementById('sync-status').innerHTML = `<span style="color:#10b981;">● 雲端已同步 (${result.updatedAt || '最新'})</span>`;
+                    showBanner('🎉 成功從 Google Sheet 下載你的卡片設定！已生效！');
+                } else {
+                    alert('Google Sheet 目前沒有儲存的紀錄，請先按「備份上雲端」！');
+                }
+            } catch (e) {
+                alert('讀取失敗，請確認 Google Apps Script 部署權限是否設為「任何人 (Anyone)」。');
+            }
+        }
+
+        function showBanner(text) {
+            const banner = document.getElementById('save-banner');
+            document.getElementById('banner-text').innerHTML = text;
+            banner.style.display = 'flex';
         }
 
         init();
