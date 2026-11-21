@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>⚙️ 卡片與權益設定 | 信用卡付款小幫手</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --primary: #2563eb;
@@ -38,6 +39,11 @@
         .sync-pull-btn:hover { background: #1e293b; color: white; }
         .sync-guide-btn { background: #4f46e5; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.88rem; font-weight: bold; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
         .sync-guide-btn:hover { background: #4338ca; }
+        
+        .fast-share-bar { display: flex; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-color); flex-wrap: wrap; }
+        .fast-share-btn { background: #1e293b; color: #38bdf8; border: 1px solid #0284c7; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.84rem; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .fast-share-btn:hover { background: #0284c7; color: white; }
+
         .sync-help-text { font-size: 0.78rem; color: #94a3b8; margin-top: 8px; line-height: 1.4; display: flex; justify-content: space-between; align-items: center; }
         
         .save-banner { background: #064e3b; color: #a7f3d0; border: 1px solid #059669; padding: 10px 16px; border-radius: 8px; margin: 0 16px 12px 16px; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; }
@@ -82,6 +88,10 @@
         .copy-script-btn { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3); }
         .copy-script-btn:hover { background: linear-gradient(135deg, #059669, #047857); }
         .highlight-box { background: #451a03; border-left: 4px solid #f59e0b; padding: 8px 12px; border-radius: 6px; color: #fde68a; font-size: 0.85rem; margin-top: 8px; }
+
+        /* QR Code 彈窗 */
+        .qr-card { text-align: center; align-items: center; padding: 24px; }
+        .qrcode-box { background: white; padding: 16px; border-radius: 12px; margin: 16px auto; display: inline-block; }
     </style>
 </head>
 <body>
@@ -111,8 +121,16 @@
                 <button class="sync-pull-btn" onclick="loadFromCloud()"><i class="fa-solid fa-cloud-arrow-down"></i> 從雲端讀取</button>
                 <button class="sync-guide-btn" onclick="openSyncModal()"><i class="fa-solid fa-book-open"></i> 設定教學與代碼</button>
             </div>
+            
+            <!-- 零手動輸入、秒級同步分享列 -->
+            <div class="fast-share-bar" id="fast-share-bar" style="display:none;">
+                <button class="fast-share-btn" onclick="copyFastShareUrl()"><i class="fa-solid fa-link"></i> 🔗 複製我的專屬同步網址</button>
+                <button class="fast-share-btn" onclick="showQrModal()"><i class="fa-solid fa-qrcode"></i> 📷 顯示同步 QR Code</button>
+                <span style="font-size:0.78rem; color:#38bdf8; display:flex; align-items:center;">✨ 新手機用 LINE 打開或相機掃碼，自動秒級綁定！</span>
+            </div>
+
             <div class="sync-help-text">
-                <span>💡 貼上一次 Google Apps Script 網址，手機與任何電腦即可雙向即時同步！</span>
+                <span>💡 只要在第一台手機設定好，用專屬連結或 QR Code 分享給新手機，秒開秒同步！</span>
                 <a href="javascript:void(0)" onclick="openSyncModal()" style="color:#60a5fa; text-decoration:underline;">查看 3 步圖文教學</a>
             </div>
         </section>
@@ -204,12 +222,30 @@
         </div>
     </div>
 
+    <!-- 專屬同步 QR Code 模態彈窗 -->
+    <div class="modal-overlay" id="qr-modal">
+        <div class="modal-card" style="max-width: 420px;">
+            <header class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-qrcode"></i> 專屬同步 QR Code
+                </div>
+                <button class="modal-close" onclick="closeQrModal()">&times;</button>
+            </header>
+            <div class="modal-body qr-card">
+                <p style="font-size:0.88rem; color:#cbd5e1;">拿新手機或平板開啟相機掃描下方 QR Code，打開即全自動綁定並同步你的卡片設定！</p>
+                <div class="qrcode-box" id="qrcode-container"></div>
+                <button class="sync-btn" onclick="copyFastShareUrl()" style="width:100%; justify-content:center;">
+                    <i class="fa-solid fa-link"></i> 複製專屬同步網址
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let CARDS = [];
         const STORAGE_KEY = 'user_card_settings_v1';
         const SHEET_API_KEY = 'google_sheet_api_url_v1';
 
-        // 完整 Google Apps Script 腳本原始碼
         const GAS_CODE = `function doGet(e) {
   var sheet = getOrCreateSheet();
   var rows = sheet.getDataRange().getValues();
@@ -242,12 +278,47 @@ function getOrCreateSheet() {
   return sheet;
 }`;
 
-        function openSyncModal() {
-            document.getElementById('sync-modal').style.display = 'flex';
+        function openSyncModal() { document.getElementById('sync-modal').style.display = 'flex'; }
+        function closeSyncModal() { document.getElementById('sync-modal').style.display = 'none'; }
+        function closeQrModal() { document.getElementById('qr-modal').style.display = 'none'; }
+
+        // 產生專屬同步網址 (例如 ?sync=base64Url)
+        function getFastShareUrl() {
+            const apiUrl = document.getElementById('sheet-api-url').value.trim();
+            if (!apiUrl) return null;
+            const encoded = encodeURIComponent(btoa(apiUrl));
+            const base = window.location.origin + window.location.pathname;
+            return `${base}?sync=${encoded}`;
         }
 
-        function closeSyncModal() {
-            document.getElementById('sync-modal').style.display = 'none';
+        function copyFastShareUrl() {
+            const url = getFastShareUrl();
+            if (!url) {
+                alert('請先填寫 Google Apps Script 網址！');
+                return;
+            }
+            navigator.clipboard.writeText(url).then(() => {
+                alert('✅ 專屬同步網址已複製！\n直接傳到 LINE、微信或備忘錄，在新手機點開瞬間自動完成雲端同步！');
+            });
+        }
+
+        function showQrModal() {
+            const url = getFastShareUrl();
+            if (!url) {
+                alert('請先填寫 Google Apps Script 網址！');
+                return;
+            }
+            const container = document.getElementById('qrcode-container');
+            container.innerHTML = '';
+            new QRCode(container, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.M
+            });
+            document.getElementById('qr-modal').style.display = 'flex';
         }
 
         function copyGasScript() {
@@ -271,11 +342,40 @@ function getOrCreateSheet() {
             return null;
         }
 
+        // 檢查網址列是否有 ?sync= 參數（自動綁定與同步）
+        async function checkUrlSyncParam() {
+            const params = new URLSearchParams(window.location.search);
+            const syncToken = params.get('sync');
+            if (syncToken) {
+                try {
+                    const decodedUrl = atob(decodeURIComponent(syncToken));
+                    if (decodedUrl.startsWith('http')) {
+                        localStorage.setItem(SHEET_API_KEY, decodedUrl);
+                        document.getElementById('sheet-api-url').value = decodedUrl;
+                        document.getElementById('sync-status').innerHTML = '<span style="color:#10b981;">● 已自動帶入雲端同步</span>';
+                        document.getElementById('fast-share-bar').style.display = 'flex';
+                        showBanner('✨ 偵測到專屬同步連結！正在為您全自動下載最新卡片設定...');
+                        // 自動從雲端抓取最新設定
+                        await loadFromCloud();
+                        // 移除網址列參數避免重新整理重複觸發
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                        return true;
+                    }
+                } catch (e) {
+                    console.error("解密 sync 參數失敗", e);
+                }
+            }
+            return false;
+        }
+
         async function init() {
+            const isAutoSynced = await checkUrlSyncParam();
+
             const savedUrl = localStorage.getItem(SHEET_API_KEY);
             if (savedUrl) {
                 document.getElementById('sheet-api-url').value = savedUrl;
                 document.getElementById('sync-status').innerHTML = '<span style="color:#10b981;">● 已綁定 Google Sheet</span>';
+                document.getElementById('fast-share-bar').style.display = 'flex';
             }
 
             try {
@@ -397,6 +497,7 @@ function getOrCreateSheet() {
             const apiUrl = document.getElementById('sheet-api-url').value.trim();
             if (apiUrl) {
                 localStorage.setItem(SHEET_API_KEY, apiUrl);
+                document.getElementById('fast-share-bar').style.display = 'flex';
                 saveToCloudSilently(apiUrl, settings);
             }
             
@@ -424,6 +525,7 @@ function getOrCreateSheet() {
                 return;
             }
             localStorage.setItem(SHEET_API_KEY, apiUrl);
+            document.getElementById('fast-share-bar').style.display = 'flex';
             const settings = collectCurrentSettings();
             localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 
@@ -436,7 +538,7 @@ function getOrCreateSheet() {
                     body: JSON.stringify({ settings: settings, device: 'ManualBackup' })
                 });
                 document.getElementById('sync-status').innerHTML = '<span style="color:#10b981;">● 雲端已同步更新</span>';
-                showBanner('☁️ 成功備份至你的 Google Sheet！其他設備貼上同一網址即可秒同步！');
+                showBanner('☁️ 成功備份至你的 Google Sheet！下方已開啟「專屬同步網址」與「QR Code」！');
             } catch (e) {
                 alert('上傳失敗，請確認網址是否正確及權限設定為「任何人」。');
             }
@@ -449,6 +551,7 @@ function getOrCreateSheet() {
                 return;
             }
             localStorage.setItem(SHEET_API_KEY, apiUrl);
+            document.getElementById('fast-share-bar').style.display = 'flex';
             showBanner('⏳ 正在從你的 Google Sheet 讀取最新設定...');
 
             try {

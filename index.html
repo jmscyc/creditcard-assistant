@@ -134,7 +134,33 @@
             return {};
         }
 
+        const SHEET_API_KEY = 'google_sheet_api_url_v1';
+
+        async function checkUrlSyncParam() {
+            const params = new URLSearchParams(window.location.search);
+            const syncToken = params.get('sync');
+            if (syncToken) {
+                try {
+                    const decodedUrl = atob(decodeURIComponent(syncToken));
+                    if (decodedUrl.startsWith('http')) {
+                        localStorage.setItem(SHEET_API_KEY, decodedUrl);
+                        // 自動從雲端抓取最新設定
+                        const res = await fetch(decodedUrl);
+                        const result = await res.json();
+                        if (result.status === 'success' && result.data) {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(result.data));
+                            console.log('雲端設定自動同步完成！');
+                        }
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    }
+                } catch (e) {
+                    console.error("解密 sync 參數失敗", e);
+                }
+            }
+        }
+
         async function loadDatabase() {
+            checkUrlSyncParam();
             try {
                 const res = await fetch('data/cards.json');
                 if (res.ok) {
