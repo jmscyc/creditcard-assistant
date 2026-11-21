@@ -1,13 +1,29 @@
 [
   {
+    "card_id": "esun_unicard",
     "card_name": "玉山 Unicard",
     "bank": "玉山銀行",
     "valid_period": "2026/01/01 - 2026/12/31 (下半年持續展延)",
     "period_tag": "2026全年/下半年",
+    "reward_type": "點數回饋 (e point)",
+    "special_tier_options": [
+      {"id": "tier_simple", "name": "簡單選 (基礎)", "extra_rate": 0.0, "desc": "免切換，基本回饋最高 2~2.5%"},
+      {"id": "tier_custom", "name": "任意選 (自選8家)", "extra_rate": 1.0, "desc": "玉山Wallet免費切換，指定特店享 3.5%"},
+      {"id": "tier_up", "name": "UP選 (百大特店)", "extra_rate": 2.0, "desc": "需付費99點或上月消費滿3萬/資產滿額，加碼至 4.5%~5.0%"}
+    ],
+    "registration_events": [
+      {
+        "title": "2026 百大特店方案切換",
+        "url": "https://event.esunbank.com.tw/credit/unicard/index.html",
+        "extra_rate": 0.0,
+        "note": "每月可於玉山 Wallet App 內免費隨時切換方案"
+      }
+    ],
     "channels": [
       {
         "channel_name": "LINE Pay / 街口支付 / 悠遊付",
         "keywords": ["line pay", "linepay", "街口", "街口支付", "悠遊付", "行動支付"],
+        "base_rate": 2.5,
         "cashback_rate": 4.5,
         "cashback_display": "最高 4.5% e point",
         "is_new_customer_only": false,
@@ -17,6 +33,7 @@
       {
         "channel_name": "日本/韓國/海外實體消費",
         "keywords": ["日本", "韓國", "國外", "海外", "日幣", "韓幣", "國外實體", "bic camera", "唐吉訶德"],
+        "base_rate": 2.5,
         "cashback_rate": 4.5,
         "cashback_display": "4.5% (海外實體消費)",
         "is_new_customer_only": false,
@@ -26,6 +43,7 @@
       {
         "channel_name": "蝦皮購物 / momo / PChome / 酷澎",
         "keywords": ["蝦皮", "shopee", "momo", "pchome", "網購", "網路購物", "酷澎", "coupang"],
+        "base_rate": 2.5,
         "cashback_rate": 3.5,
         "cashback_display": "3.5% e point",
         "is_new_customer_only": false,
@@ -35,6 +53,7 @@
       {
         "channel_name": "國內一般消費無腦刷",
         "keywords": ["國內一般", "一般消費", "無腦刷", "隨便", "無腦", "實體刷卡", "國內"],
+        "base_rate": 1.0,
         "cashback_rate": 1.0,
         "cashback_display": "1.0% 無上限",
         "is_new_customer_only": false,
@@ -46,14 +65,28 @@
     "source_blog": "符碼記憶"
   },
   {
+    "card_id": "taishin_gogo",
     "card_name": "台新 GoGo卡",
     "bank": "台新銀行",
     "valid_period": "2026/06/01 - 2026/11/30 (2026下半年最新權益)",
     "period_tag": "2026下半年",
+    "reward_type": "點數回饋 (台新Point)",
+    "special_tier_options": [
+      {"id": "richart_bound", "name": "Richart 自動扣繳 (標準)", "extra_rate": 0.0, "desc": "設定數位帳單 + Richart 自動扣繳即享 3.8%"}
+    ],
+    "registration_events": [
+      {
+        "title": "台新 Richart Life App 領券加碼",
+        "url": "https://www.taishinbank.com.tw/TSB/personal/credit/",
+        "extra_rate": 0.5,
+        "note": "每月於 Richart Life 領券指定通路額外加碼 0.5%"
+      }
+    ],
     "channels": [
       {
         "channel_name": "街口支付 / 台新Pay / 全盈+PAY",
         "keywords": ["街口", "街口支付", "台新pay", "全盈", "超商", "7-11", "全家"],
+        "base_rate": 3.8,
         "cashback_rate": 3.8,
         "cashback_display": "3.8% 台新Point",
         "is_new_customer_only": false,
@@ -63,6 +96,7 @@
       {
         "channel_name": "蝦皮 / momo / PChome / 酷澎網購",
         "keywords": ["蝦皮", "momo", "pchome", "酷澎", "網購", "購物"],
+        "base_rate": 3.8,
         "cashback_rate": 3.8,
         "cashback_display": "3.8% 台新Point",
         "is_new_customer_only": false,
@@ -74,14 +108,29 @@
     "source_blog": "這就是人生"
   },
   {
+    "card_id": "cathay_cube",
     "card_name": "國泰世華 CUBE卡",
     "bank": "國泰世華",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年權益更新)",
     "period_tag": "2026下半年",
+    "reward_type": "點數回饋 (小樹點)",
+    "special_tier_options": [
+      {"id": "cube_level1", "name": "玩數位/樂饗購 (標準 3.0%)", "extra_rate": 0.0, "desc": "天天登入國泰 App 切換權益享 3.0% 無上限"},
+      {"id": "cube_level2", "name": "財富管理/VIP (加碼至 3.3%)", "extra_rate": 0.3, "desc": "符合指定帳戶資產或等級，享有 3.3% 無上限"}
+    ],
+    "registration_events": [
+      {
+        "title": "CUBE 權益切換與快閃特店登錄",
+        "url": "https://www.cathaybk.com.tw/cathaybk/personal/event/cube/",
+        "extra_rate": 0.0,
+        "note": "消費當日 23:59 前於國泰優惠 CUBE App 切換指定權益"
+      }
+    ],
     "channels": [
       {
         "channel_name": "日本/韓國/海外消費 (趣旅行)",
         "keywords": ["日本", "韓國", "海外", "國外", "日幣", "韓元", "機場", "機票", "飯店", "agoda", "booking"],
+        "base_rate": 3.3,
         "cashback_rate": 3.3,
         "cashback_display": "3.3% 小樹點(信用卡) 無上限",
         "is_new_customer_only": false,
@@ -91,6 +140,7 @@
       {
         "channel_name": "蝦皮 / momo / 酷澎 / 博客來 (玩數位)",
         "keywords": ["蝦皮", "momo", "酷澎", "網購", "網路購物", "博客來"],
+        "base_rate": 3.0,
         "cashback_rate": 3.0,
         "cashback_display": "3.0% 小樹點 無上限",
         "is_new_customer_only": false,
@@ -100,6 +150,7 @@
       {
         "channel_name": "中油直營 / Uber Eats / 高鐵 / 捷運 (集精選)",
         "keywords": ["中油", "加油", "uber", "uber eats", "外送", "高鐵", "台鐵", "計程車"],
+        "base_rate": 3.0,
         "cashback_rate": 3.0,
         "cashback_display": "3.0% 小樹點",
         "is_new_customer_only": false,
@@ -109,6 +160,7 @@
       {
         "channel_name": "國內一般消費",
         "keywords": ["國內一般", "一般消費", "無腦刷", "隨便", "無腦"],
+        "base_rate": 0.3,
         "cashback_rate": 0.3,
         "cashback_display": "0.3% 基本回饋無上限",
         "is_new_customer_only": false,
@@ -120,14 +172,29 @@
     "source_blog": "符碼記憶"
   },
   {
+    "card_id": "sinopac_sport",
     "card_name": "永豐 SPORT卡",
     "bank": "永豐銀行",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
     "period_tag": "2026下半年",
+    "reward_type": "點數回饋 (豐點折抵帳單)",
+    "special_tier_options": [
+      {"id": "sport_active", "name": "汗水不白流達標 (享 6.0%)", "extra_rate": 0.0, "desc": "每月運動燃燒 7,000 卡路里或運動 10 天，舊戶 AP/GP 即享 6.0%"},
+      {"id": "sport_inactive", "name": "未達運動門檻 (僅基本 1.0%)", "extra_rate": -5.0, "desc": "若本月未達運動卡路里，僅能享有基本 1%"}
+    ],
+    "registration_events": [
+      {
+        "title": "永豐汗水不白流 App 運動記錄",
+        "url": "https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/sportcard.html",
+        "extra_rate": 0.0,
+        "note": "需下載「汗水不白流」App 並授權 Apple Health / Google Fit"
+      }
+    ],
     "channels": [
       {
         "channel_name": "Apple Pay / Google Pay 行動感應支付",
         "keywords": ["apple pay", "google pay", "ap", "gp", "感應支付", "實體刷卡", "手機感應"],
+        "base_rate": 6.0,
         "cashback_rate": 6.0,
         "cashback_display": "最高 6.0% 豐點",
         "is_new_customer_only": false,
@@ -139,14 +206,28 @@
     "source_blog": "符碼記憶"
   },
   {
+    "card_id": "ubot_jihe",
     "card_name": "聯邦 吉鶴卡",
     "bank": "聯邦銀行",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年續約)",
     "period_tag": "2026下半年",
+    "reward_type": "現金折抵帳單",
+    "special_tier_options": [
+      {"id": "jihe_standard", "name": "一般卡友 (QUICPay 4.0%)", "extra_rate": 0.0, "desc": "日本實體一般 2.5% + Apple Pay QUICPay 加碼 1.5%"}
+    ],
+    "registration_events": [
+      {
+        "title": "聯邦日系名店與海外登錄專案",
+        "url": "https://card.ubot.com.tw/eCard/activity/2026Jihe/index.htm",
+        "extra_rate": 0.0,
+        "note": "指定日系連鎖 Uniqlo/無印良品/宜得利 4% 免登錄直接回饋"
+      }
+    ],
     "channels": [
       {
         "channel_name": "日本在地實體店家 (QUICPay / 實體卡)",
         "keywords": ["日本", "日本實體", "quicpay", "apple pay 日本", "唐吉訶德", "bic camera", "日幣"],
+        "base_rate": 4.0,
         "cashback_rate": 4.0,
         "cashback_display": "最高 4.0% 現金回饋",
         "is_new_customer_only": false,
@@ -156,6 +237,7 @@
       {
         "channel_name": "國內日系名店 (Uniqlo/無印良品/宜得利/大創/壽司郎/藏壽司)",
         "keywords": ["uniqlo", "無印良品", "宜得利", "大創", "壽司郎", "藏壽司", "日系品牌"],
+        "base_rate": 4.0,
         "cashback_rate": 4.0,
         "cashback_display": "4.0% 現金回饋",
         "is_new_customer_only": false,
@@ -167,14 +249,29 @@
     "source_blog": "這就是人生"
   },
   {
+    "card_id": "fubon_j",
     "card_name": "富邦 J卡",
     "bank": "台北富邦",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
     "period_tag": "2026下半年",
+    "reward_type": "點數回饋 (LINE POINTS)",
+    "special_tier_options": [
+      {"id": "j_standard", "name": "日韓一般 3.0% 無上限", "extra_rate": 0.0, "desc": "既有卡友日韓一般實體消費 3.0% LINE POINTS 無上限"},
+      {"id": "j_convenience", "name": "日韓便利商店/藥妝加碼 (達 6.0%)", "extra_rate": 3.0, "desc": "於日本 7-11/Lawson/FamilyMart 或松本清消費加碼 3%"}
+    ],
+    "registration_events": [
+      {
+        "title": "富邦 J卡 每季日韓加碼登錄活動",
+        "url": "https://www.fubon.com/banking/personal/credit_card/all_card/jcard/jcard.htm",
+        "extra_rate": 3.0,
+        "note": "每季於台北富邦官網或 LINE 官方帳號開放登錄，每季上限 600 點"
+      }
+    ],
     "channels": [
       {
         "channel_name": "日韓實體消費",
         "keywords": ["日本", "韓國", "日韓", "日幣", "韓元", "日本實體", "驚安殿堂"],
+        "base_rate": 3.0,
         "cashback_rate": 6.0,
         "cashback_display": "最高 6.0% (3%無上限 + 指定日韓通路加碼3%)",
         "is_new_customer_only": false,
@@ -184,6 +281,7 @@
       {
         "channel_name": "LINE Pay 國內消費",
         "keywords": ["line pay", "linepay", "國內 line pay"],
+        "base_rate": 1.0,
         "cashback_rate": 1.0,
         "cashback_display": "1.0% LINE POINTS 無上限",
         "is_new_customer_only": false,
@@ -195,14 +293,28 @@
     "source_blog": "這就是人生"
   },
   {
+    "card_id": "scsb_minions",
     "card_name": "上海商業銀行 小小兵卡 (BEE DO卡)",
     "bank": "上海商銀",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
     "period_tag": "2026下半年",
+    "reward_type": "現金折抵帳單",
+    "special_tier_options": [
+      {"id": "minions_auto_pay", "name": "電子帳單+自動扣繳 (享 5.0%)", "extra_rate": 0.0, "desc": "設定上海商銀自動扣繳生活繳費享 5%"}
+    ],
+    "registration_events": [
+      {
+        "title": "小小兵卡指定生活通路回饋專案",
+        "url": "https://www.scsb.com.tw/content/card/card03_minions.jsp",
+        "extra_rate": 0.0,
+        "note": "水電瓦斯/超商/全聯皆列入 5% 回饋（每月上限 200 元）"
+      }
+    ],
     "channels": [
       {
         "channel_name": "全聯 / 超商 7-11 / 全家 / 繳費",
         "keywords": ["全聯", "7-11", "全家", "超商", "繳費", "水電費", "瓦斯費", "路邊停車", "萊爾富"],
+        "base_rate": 5.0,
         "cashback_rate": 5.0,
         "cashback_display": "5.0% 現金回饋",
         "is_new_customer_only": false,
@@ -212,6 +324,7 @@
       {
         "channel_name": "全球主題樂園 (迪士尼/環球影城)",
         "keywords": ["迪士尼", "環球影城", "樂園", "日本環球", "東京迪士尼"],
+        "base_rate": 10.0,
         "cashback_rate": 10.0,
         "cashback_display": "10.0% 現金回饋",
         "is_new_customer_only": false,
@@ -223,14 +336,29 @@
     "source_blog": "這就是人生"
   },
   {
+    "card_id": "sinopac_dawho",
     "card_name": "永豐 大戶 DAWHO 信用卡",
     "bank": "永豐銀行",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
     "period_tag": "2026下半年",
+    "reward_type": "現金折抵帳單",
+    "special_tier_options": [
+      {"id": "dawho_big", "name": "大戶等級 (資產滿10萬，享 7.0%)", "extra_rate": 0.0, "desc": "大戶數位帳戶平均資產滿 10 萬，指定通路享國內 7% / 國外 8%"},
+      {"id": "dawho_music", "name": "大大等級 (未滿10萬，享 2.0%)", "extra_rate": -5.0, "desc": "若資產未達 10 萬，僅有基礎回饋 1~2%"}
+    ],
+    "registration_events": [
+      {
+        "title": "永豐大戶等級檢測與數位帳戶加碼",
+        "url": "https://dawho.tw/about/card/",
+        "extra_rate": 0.0,
+        "note": "每月 21 日系統自動檢核前一月資產，自動升級大戶等級免手動登錄"
+      }
+    ],
     "channels": [
       {
         "channel_name": "外送 (Uber Eats/Foodpanda) / 旅行 (機票/飯店) / 影音 (Netflix/Spotify)",
         "keywords": ["外送", "uber eats", "foodpanda", "netflix", "spotify", "disney+", "影音", "機票", "飯店", "訂房"],
+        "base_rate": 7.0,
         "cashback_rate": 7.0,
         "cashback_display": "國內最高 7.0% / 國外最高 8.0%",
         "is_new_customer_only": false,
@@ -240,6 +368,7 @@
       {
         "channel_name": "悠遊卡自動加值",
         "keywords": ["悠遊卡", "自動加值", "捷運", "公車", "加值"],
+        "base_rate": 5.0,
         "cashback_rate": 5.0,
         "cashback_display": "5.0% 現金回饋",
         "is_new_customer_only": false,
@@ -251,14 +380,28 @@
     "source_blog": "符碼記憶"
   },
   {
+    "card_id": "feib_happy",
     "card_name": "遠東 樂家+卡",
     "bank": "遠東商銀",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
     "period_tag": "2026下半年",
+    "reward_type": "現金折抵帳單",
+    "special_tier_options": [
+      {"id": "feib_autopay", "name": "遠銀扣繳 (享 5.0%)", "extra_rate": 0.0, "desc": "設定遠銀帳戶自動扣繳即享 5.0% 生活通路加碼"}
+    ],
+    "registration_events": [
+      {
+        "title": "遠東樂家+指定通路登錄活動",
+        "url": "https://www.feib.com.tw/upload/CreditCard/YplusCard/index.html",
+        "extra_rate": 0.0,
+        "note": "加油/餐廳/寵物直接刷卡享 5% 回饋，每月上限 350 元"
+      }
+    ],
     "channels": [
       {
         "channel_name": "加油 / 餐廳 / 寵物 / 健身房",
         "keywords": ["加油", "中油", "全國加油", "台亞", "餐廳", "吃飯", "餐飲", "寵物", "寵物公園", "健身房", "world gym"],
+        "base_rate": 5.0,
         "cashback_rate": 5.0,
         "cashback_display": "5.0% 現金回饋",
         "is_new_customer_only": false,
@@ -270,14 +413,29 @@
     "source_blog": "這就是人生"
   },
   {
+    "card_id": "cathay_shopee",
     "card_name": "國泰世華 蝦皮聯名卡",
     "bank": "國泰世華",
     "valid_period": "2026/07/01 - 2026/12/31 (2026下半年)",
     "period_tag": "2026下半年",
+    "reward_type": "點數回饋 (蝦幣)",
+    "special_tier_options": [
+      {"id": "shopee_super_sale", "name": "超級大促日 (最高 10.0%)", "extra_rate": 0.0, "desc": "每月大促日（如 6.6、11.11、雙數日）享 10% 蝦幣回饋"},
+      {"id": "shopee_normal", "name": "平日消費 (標準 4.0%)", "extra_rate": -6.0, "desc": "站內平日消費享 4% 蝦幣無上限"}
+    ],
+    "registration_events": [
+      {
+        "title": "每月蝦皮促銷日領券加碼",
+        "url": "https://shopee.tw/m/cathaybk",
+        "extra_rate": 0.0,
+        "note": "每月大促日前至蝦皮聯名卡專區領取專屬免運券與加碼券"
+      }
+    ],
     "channels": [
       {
         "channel_name": "蝦皮購物站內消費 (大促日加碼)",
         "keywords": ["蝦皮", "shopee", "蝦皮購物", "大促日", "免運"],
+        "base_rate": 4.0,
         "cashback_rate": 10.0,
         "cashback_display": "最高 10.0% 蝦幣",
         "is_new_customer_only": false,

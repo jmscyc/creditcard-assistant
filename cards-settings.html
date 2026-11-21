@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚙️ 卡片與權益設定 | 信用卡付款小幫手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #0b1120;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent: #10b981;
+            --warning-bg: #451a03;
+            --warning-border: #d97706;
+            --warning-text: #fde68a;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; justify-content: center; padding: 12px; }
+        .settings-container { width: 100%; max-width: 850px; background: #0f172a; border-radius: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+        .settings-header { padding: 16px 20px; background: #1e293b; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .back-btn { background: #334155; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+        .back-btn:hover { background: #475569; }
+        .save-banner { background: #064e3b; color: #a7f3d0; border: 1px solid #059669; padding: 10px 16px; border-radius: 8px; margin: 16px; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; }
+        .quick-toggle-bar { padding: 0 16px 12px 16px; display: flex; gap: 10px; }
+        .quick-toggle-bar button { background: #334155; color: #cbd5e1; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .quick-toggle-bar button:hover { background: #475569; color: white; }
+        .card-list { padding: 0 16px 20px 16px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+        .card-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; transition: all 0.2s; }
+        .card-item.selected { border-color: #3b82f6; background: #182234; }
+        .card-title-row { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .card-checkbox-label { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: bold; cursor: pointer; color: white; }
+        .card-checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+        .bank-badge { font-size: 0.75rem; background: #334155; color: #94a3b8; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-left: 6px; }
+        .card-channels-preview { margin-top: 8px; font-size: 0.85rem; color: #94a3b8; line-height: 1.4; }
+        .extra-settings-panel { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border-color); }
+        .tier-select-group { margin-bottom: 12px; }
+        .tier-label { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 6px; display: block; font-weight: 600; }
+        .tier-select { width: 100%; background: #0f172a; color: white; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 0.88rem; outline: none; }
+        .event-box { background: #111827; border: 1px solid #374151; border-radius: 8px; padding: 10px 12px; margin-top: 8px; }
+        .event-title { font-size: 0.86rem; color: #fbbf24; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+        .event-link { color: #60a5fa; text-decoration: none; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; background: #1e293b; border-radius: 4px; border: 1px solid #3b82f6; }
+        .event-link:hover { text-decoration: underline; background: #2563eb; color: white; }
+        .event-note { font-size: 0.8rem; color: #9ca3af; margin-top: 4px; }
+        .save-footer { padding: 14px 20px; background: #1e293b; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px; }
+        .save-btn { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .save-btn:hover { background: var(--primary-hover); }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <header class="settings-header">
+            <div class="header-left">
+                <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> 回到對話</a>
+                <div>
+                    <h2>⚙️ 我的卡片與特別權益設定</h2>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">勾選你擁有的卡片，並設定會員等級或登錄活動！</p>
+                </div>
+            </div>
+            <button class="save-btn" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> 儲存設定</button>
+        </header>
+
+        <div class="save-banner" id="save-banner" style="display:none;">
+            <span><i class="fa-solid fa-circle-check"></i> 設定已成功儲存至手機瀏覽器！回到對話時將優先推薦你的持卡。</span>
+        </div>
+
+        <div class="quick-toggle-bar">
+            <button onclick="selectAll(true)"><i class="fa-solid fa-check-double"></i> 全選所有卡</button>
+            <button onclick="selectAll(false)"><i class="fa-solid fa-xmark"></i> 全部取消</button>
+            <button onclick="resetDefaults()"><i class="fa-solid fa-rotate-left"></i> 重設為預設</button>
+        </div>
+
+        <main class="card-list" id="card-list">
+            <div style="text-align:center; padding: 30px; color: var(--text-muted);">
+                <i class="fa-solid fa-spinner fa-spin"></i> 載入爬蟲卡片資料庫中...
+            </div>
+        </main>
+
+        <footer class="save-footer">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> 放棄變更</a>
+            <button class="save-btn" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> 儲存設定並返回對話</button>
+        </footer>
+    </div>
+
+    <script>
+        let CARDS = [];
+        const STORAGE_KEY = 'user_card_settings_v1';
+
+        // 讀取既有設定或預設全選
+        function getUserSettings() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return null;
+        }
+
+        async function init() {
+            try {
+                const res = await fetch('data/cards.json');
+                CARDS = await res.json();
+            } catch (e) {
+                console.error("無法載入 cards.json", e);
+            }
+            renderCards();
+        }
+
+        function renderCards() {
+            const listEl = document.getElementById('card-list');
+            const saved = getUserSettings() || {};
+            let html = '';
+
+            CARDS.forEach(card => {
+                const cardId = card.card_id || card.card_name;
+                const isSelected = saved[cardId] ? saved[cardId].owned : true; // 預設全選
+                const userTier = saved[cardId]?.tierId || (card.special_tier_options ? card.special_tier_options[0].id : '');
+                
+                // 通路預覽
+                const chNames = (card.channels || []).map(c => `${c.channel_name} (${c.cashback_display})`).join('、');
+
+                // 會員等級 / 特別權益選項 HTML
+                let tierHtml = '';
+                if (card.special_tier_options && card.special_tier_options.length > 0) {
+                    tierHtml = `
+                    <div class="tier-select-group">
+                        <label class="tier-label"><i class="fa-solid fa-sliders"></i> 會員方案 / 權益等級：</label>
+                        <select class="tier-select" id="tier_${cardId}">
+                            ${card.special_tier_options.map(opt => `
+                                <option value="${opt.id}" ${opt.id === userTier ? 'selected' : ''}>
+                                    ${opt.name} - ${opt.desc}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </div>`;
+                }
+
+                // 登錄活動與官網連結
+                let eventHtml = '';
+                if (card.registration_events && card.registration_events.length > 0) {
+                    eventHtml = `
+                    <div class="tier-label"><i class="fa-solid fa-bullhorn"></i> 特別加碼活動與登錄連結：</div>
+                    ${card.registration_events.map(ev => `
+                        <div class="event-box">
+                            <div class="event-title">
+                                <span>🎯 ${ev.title}</span>
+                                <a href="${ev.url}" target="_blank" class="event-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 前往活動/登錄</a>
+                            </div>
+                            <div class="event-note">📌 ${ev.note}</div>
+                        </div>
+                    `).join('')}`;
+                }
+
+                html += `
+                <div class="card-item ${isSelected ? 'selected' : ''}" id="card_item_${cardId}">
+                    <div class="card-title-row">
+                        <label class="card-checkbox-label" for="chk_${cardId}">
+                            <input type="checkbox" id="chk_${cardId}" value="${cardId}" ${isSelected ? 'checked' : ''} onchange="toggleCardSelect('${cardId}')">
+                            <span>${card.card_name}</span>
+                            <span class="bank-badge">${card.bank}</span>
+                        </label>
+                        <span style="font-size:0.75rem; color:#10b981; font-weight:bold;">${card.period_tag}</span>
+                    </div>
+                    <div class="card-channels-preview">
+                        <strong>主要權益：</strong>${chNames}
+                    </div>
+                    <div class="extra-settings-panel">
+                        ${tierHtml}
+                        ${eventHtml}
+                    </div>
+                </div>`;
+            });
+
+            listEl.innerHTML = html;
+        }
+
+        function toggleCardSelect(cardId) {
+            const chk = document.getElementById(`chk_${cardId}`);
+            const item = document.getElementById(`card_item_${cardId}`);
+            if (chk.checked) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+        }
+
+        function selectAll(state) {
+            CARDS.forEach(card => {
+                const cardId = card.card_id || card.card_name;
+                const chk = document.getElementById(`chk_${cardId}`);
+                if (chk) chk.checked = state;
+                toggleCardSelect(cardId);
+            });
+        }
+
+        function resetDefaults() {
+            selectAll(true);
+        }
+
+        function saveSettings() {
+            const settings = {};
+            CARDS.forEach(card => {
+                const cardId = card.card_id || card.card_name;
+                const chk = document.getElementById(`chk_${cardId}`);
+                const tierSelect = document.getElementById(`tier_${cardId}`);
+                
+                settings[cardId] = {
+                    owned: chk ? chk.checked : true,
+                    tierId: tierSelect ? tierSelect.value : null
+                };
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+            
+            const banner = document.getElementById('save-banner');
+            banner.style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 800);
+        }
+
+        init();
+    </script>
+</body>
+</html>

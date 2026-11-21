@@ -25,13 +25,15 @@
         @media (min-width: 640px) {
             .chat-container { height: 94dvh; border-radius: 16px; border: 1px solid var(--border-color); }
         }
-        .chat-header { padding: 14px 18px; background: #1e293b; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .header-info { display: flex; align-items: center; gap: 12px; }
-        .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; flex-shrink: 0; }
-        .status-subtitle { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .chat-header { padding: 12px 16px; background: #1e293b; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .header-info { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; font-size: 18px; color: white; flex-shrink: 0; }
+        .status-subtitle { font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
         .status-dot { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; display: inline-block; }
         .header-actions { display: flex; gap: 8px; }
-        .header-actions button { background: #334155; color: #e2e8f0; border: none; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; display: flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .header-actions a, .header-actions button { background: #334155; color: #e2e8f0; border: none; padding: 7px 11px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; display: flex; align-items: center; gap: 5px; text-decoration: none; transition: all 0.2s; }
+        .header-actions a.settings-link { background: #1d4ed8; color: white; font-weight: bold; }
+        .header-actions a.settings-link:hover { background: #2563eb; }
         .header-actions button:hover { background: #475569; }
         .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; -webkit-overflow-scrolling: touch; }
         .message { display: flex; max-width: 90%; }
@@ -41,16 +43,24 @@
         .message.bot .bubble { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); }
         .message.user .bubble { background: var(--primary); color: white; border-bottom-right-radius: 4px; }
         .rec-card { background: #182234; border: 1px solid #3b82f6; border-radius: 10px; padding: 12px 14px; margin-top: 10px; position: relative; }
+        .rec-card.owned-card { border-color: #10b981; }
         .rec-title { font-weight: 700; font-size: 1.02rem; color: #60a5fa; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding-right: 32px; }
         .rate-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.82rem; font-weight: bold; }
         .type-tag { font-size: 0.75rem; color: #cbd5e1; background: #334155; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+        .owned-tag { font-size: 0.75rem; background: #065f46; color: #6ee7b7; padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: bold; }
+        .not-owned-tag { font-size: 0.75rem; background: #374151; color: #9ca3af; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
         .rec-detail { font-size: 0.87rem; color: #cbd5e1; margin-bottom: 4px; }
         .rec-warning { background: var(--warning-bg); border-left: 3px solid var(--warning-border); color: var(--warning-text); padding: 6px 10px; border-radius: 4px; font-size: 0.82rem; margin: 6px 0; }
         .rec-calc { background: #064e3b; color: #6ee7b7; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 4px; font-size: 0.88rem; font-weight: bold; margin: 6px 0; }
+        .rec-tier-info { background: #1e1b4b; color: #c7d2fe; border-left: 3px solid #6366f1; padding: 6px 10px; border-radius: 4px; font-size: 0.82rem; margin: 6px 0; }
+        .rec-event-link { display: inline-flex; align-items: center; gap: 4px; background: #1e293b; color: #fbbf24; border: 1px solid #d97706; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; text-decoration: none; margin-top: 4px; }
+        .rec-event-link:hover { background: #b45309; color: white; }
         .rec-source { font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
         .rec-source a { color: #93c5fd; text-decoration: none; }
         .copy-btn { position: absolute; top: 10px; right: 10px; background: #334155; color: #94a3b8; border: none; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
         .copy-btn:hover { background: #475569; color: white; }
+        .more-cards-btn { width: 100%; margin-top: 10px; background: #334155; color: #93c5fd; border: 1px dashed #3b82f6; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.88rem; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .more-cards-btn:hover { background: #1e293b; color: white; }
         .quick-chips { padding: 8px 14px; background: #111827; border-top: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; overflow-x: auto; white-space: nowrap; flex-shrink: 0; }
         .quick-chips::-webkit-scrollbar { display: none; }
         .chip { background: #1e293b; color: #93c5fd; border: 1px solid #334155; padding: 5px 12px; border-radius: 16px; font-size: 0.82rem; cursor: pointer; flex-shrink: 0; }
@@ -69,25 +79,27 @@
                 <div class="avatar"><i class="fa-solid fa-credit-card"></i></div>
                 <div>
                     <h2>信用卡付款小幫手</h2>
-                    <p class="status-subtitle"><span class="status-dot"></span> GitHub Pages 雲端隨身版 | 排除新戶</p>
+                    <p class="status-subtitle"><span class="status-dot"></span> 預設推薦前 5 張卡 | 支援皮夾與特別權益</p>
                 </div>
             </div>
             <div class="header-actions">
-                <button id="clear-chat-btn" title="清空對話"><i class="fa-solid fa-trash-can"></i> 清空</button>
+                <a href="cards-settings.html" class="settings-link"><i class="fa-solid fa-sliders"></i> 我的皮夾/權益</a>
+                <button id="clear-chat-btn" title="清空對話"><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </header>
 
         <main class="chat-messages" id="chat-messages">
             <div class="message bot">
                 <div class="bubble">
-                    👋 你好！我是你的<strong>信用卡付款小幫手 (GitHub 隨身版)</strong>。<br><br>
-                    此版本完全運行在你的瀏覽器中，<strong>免安裝、免伺服器、手機秒開</strong>！
+                    👋 你好！我是你的<strong>信用卡付款小幫手</strong>。<br><br>
+                    此版本已全面升級個人化皮夾與特別權益試算：
                     <ul style="margin: 8px 0 0 20px;">
-                        <li>✨ <strong>自動排除新戶獨享/首刷禮</strong>（只推薦人人可拿的常態回饋）</li>
-                        <li>⚠️ <strong>超商/繳費/全聯陷阱提示</strong>（提醒銀行除外不回饋規定）</li>
-                        <li>💵 <strong>支援消費金額試算</strong>（例如輸入「<code>蝦皮 3000</code>」或「<code>加油 1000</code>」）</li>
+                        <li>⚙️ <strong><a href="cards-settings.html" style="color:#60a5fa; font-weight:bold;">[點此設定我的卡片]</a></strong>：可勾選你擁有的卡片、自訂會員等級（如玉山 UP選/CUBE VIP/大戶資格），並查看<strong>登錄活動連結</strong>！</li>
+                        <li>💳 <strong>每次優先推薦 5 張最優卡片</strong>（有擁有的卡片優先置頂）</li>
+                        <li>➕ <strong>「查看更多卡片」按鈕</strong>：點擊一鍵展開第 6 張之後的所有備用卡！</li>
+                        <li>💵 <strong>精準金額試算</strong>：依據你的會員加碼等級算出最合理的實際回饋點數/金額！</li>
                     </ul>
-                    <br>請點選下方快捷按鈕，或直接在下方輸入想付款的通路！
+                    <br>請點選下方快捷按鈕，或直接在下方輸入想付款的通路與金額（例如：<code>LINE Pay</code>、<code>蝦皮 3000</code>、<code>日本實體</code>）！
                 </div>
             </div>
         </main>
@@ -95,7 +107,7 @@
         <div class="quick-chips">
             <span style="font-size:0.78rem; color:var(--text-muted); flex-shrink:0;">快捷：</span>
             <button class="chip" onclick="sendQuick('LINE Pay')">📱 LINE Pay</button>
-            <button class="chip" onclick="sendQuick('日本實體')">🇯🇵 日本實體/日幣</button>
+            <button class="chip" onclick="sendQuick('日本實體 50000')">🇯🇵 日本 5萬</button>
             <button class="chip" onclick="sendQuick('蝦皮購物 3000')">🛒 蝦皮 3000</button>
             <button class="chip" onclick="sendQuick('超商 7-11 繳費')">🏪 超商/繳費/全聯</button>
             <button class="chip" onclick="sendQuick('中油 加油 1000')">⛽ 加油 1000</button>
@@ -110,10 +122,18 @@
     </div>
 
     <script>
-        // 內嵌結構化最新卡片資料庫
         let CARDS_DB = [];
+        const STORAGE_KEY = 'user_card_settings_v1';
+        let CURRENT_SEARCH_CACHE = {}; // 保存每次搜尋的剩餘卡片快取
 
-        // 載入 cards.json (同目錄)
+        function getUserSettings() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return {};
+        }
+
         async function loadDatabase() {
             try {
                 const res = await fetch('data/cards.json');
@@ -185,9 +205,10 @@
             return { query: str.trim(), amount: null };
         }
 
-        function searchBestCards(rawQuery) {
+        function searchAllMatchedCards(rawQuery) {
             const { query: cleanQuery, amount } = extractAmount(rawQuery);
             const q = cleanQuery.toLowerCase();
+            const userSettings = getUserSettings();
 
             let searchTerms = new Set([q]);
             for (const [key, aliases] of Object.entries(CHANNEL_ALIASES)) {
@@ -198,7 +219,23 @@
 
             let matches = [];
             for (const card of CARDS_DB) {
+                const cardId = card.card_id || card.card_name;
+                const isOwned = userSettings[cardId] ? userSettings[cardId].owned : true;
+                const userTierId = userSettings[cardId]?.tierId;
+
+                // 取得該卡設定的額外加碼率與說明
+                let tierExtraRate = 0.0;
+                let tierDesc = '';
+                if (card.special_tier_options && userTierId) {
+                    const opt = card.special_tier_options.find(o => o.id === userTierId);
+                    if (opt) {
+                        tierExtraRate = opt.extra_rate || 0.0;
+                        tierDesc = `${opt.name}`;
+                    }
+                }
+
                 const rewardType = card.reward_type || (card.bank === '上海商銀' || card.bank === '遠東商銀' ? '現金折抵帳單' : '點數回饋');
+
                 for (const ch of card.channels || []) {
                     if (ch.is_new_customer_only) continue;
 
@@ -232,20 +269,29 @@
                             }
                         }
 
+                        // 計算根據會員等級調校後的回饋率
+                        const baseCashbackRate = ch.cashback_rate || 0;
+                        const finalRate = Math.max(0, baseCashbackRate + tierExtraRate);
+                        const rateDisplay = tierExtraRate !== 0 ? `${finalRate}% (${tierDesc})` : ch.cashback_display;
+
                         let estReward = null;
                         if (amount && amount > 0) {
-                            estReward = Math.round(amount * (ch.cashback_rate / 100.0) * 10) / 10;
+                            estReward = Math.round(amount * (finalRate / 100.0) * 10) / 10;
                         }
 
                         matches.push({
+                            card_id: cardId,
                             card_name: card.card_name,
                             bank: card.bank,
+                            is_owned: isOwned,
                             reward_type: rewardType,
                             matched_channel: ch.channel_name,
-                            cashback_rate: ch.cashback_rate || 0,
-                            cashback_display: ch.cashback_display,
+                            cashback_rate: finalRate,
+                            cashback_display: rateDisplay,
+                            tier_desc: tierDesc,
                             cap: ch.cap,
                             condition: ch.condition,
+                            registration_events: card.registration_events || [],
                             warning: warning,
                             estimated_reward: estReward,
                             valid_period: card.valid_period,
@@ -257,8 +303,57 @@
                 }
             }
 
-            matches.sort((a, b) => b.cashback_rate - a.cashback_rate);
-            return { query: cleanQuery, amount: amount, cards: matches.slice(0, 4) };
+            // 排序邏輯：持有的卡優先置頂，再依據回饋率高到低
+            matches.sort((a, b) => {
+                if (a.is_owned !== b.is_owned) {
+                    return a.is_owned ? -1 : 1;
+                }
+                return b.cashback_rate - a.cashback_rate;
+            });
+
+            return { query: cleanQuery, amount: amount, allMatches: matches };
+        }
+
+        function renderCardItem(c, idx, amount) {
+            const copySummary = `${c.bank} ${c.card_name} - ${c.cashback_display} (${c.matched_channel}) | 門檻: ${c.cap}`;
+            const warnBlock = c.warning ? `<div class="rec-warning">${escapeHtml(c.warning)}</div>` : '';
+            const calcBlock = c.estimated_reward ? `<div class="rec-calc">💰 消費 $${amount.toLocaleString()} 元，預估可拿約 ${c.estimated_reward} 元/點！</div>` : '';
+            const tierBlock = c.tier_desc ? `<div class="rec-tier-info">💎 套用設定之權益等級：${escapeHtml(c.tier_desc)}</div>` : '';
+
+            let eventsHtml = '';
+            if (c.registration_events && c.registration_events.length > 0) {
+                eventsHtml = c.registration_events.map(ev => `
+                    <div style="margin-top:4px;">
+                        <a href="${escapeHtml(ev.url)}" target="_blank" class="rec-event-link">
+                            <i class="fa-solid fa-gift"></i> 活動/登錄：${escapeHtml(ev.title)}
+                        </a>
+                    </div>
+                `).join('');
+            }
+
+            const ownedTag = c.is_owned 
+                ? `<span class="owned-tag"><i class="fa-solid fa-wallet"></i> 我的卡片</span>` 
+                : `<span class="not-owned-tag">未持有</span>`;
+
+            return `
+            <div class="rec-card ${c.is_owned ? 'owned-card' : ''}">
+                <button class="copy-btn" title="複製卡片資訊" onclick="copyCardInfo(this, '${escapeHtml(copySummary)}')">
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <div class="rec-title">
+                    <span>Top ${idx + 1}：${escapeHtml(c.bank)} ${escapeHtml(c.card_name)} ${ownedTag} <span class="type-tag">${escapeHtml(c.reward_type)}</span></span>
+                    <span class="rate-badge">${escapeHtml(c.cashback_display)}</span>
+                </div>
+                ${tierBlock}
+                ${calcBlock}
+                <div class="rec-detail"><strong>🎯 通路：</strong>${escapeHtml(c.matched_channel)}</div>
+                <div class="rec-detail"><strong>⏱️ 期限：</strong>${escapeHtml(c.valid_period)} (${escapeHtml(c.period_tag)})</div>
+                <div class="rec-detail"><strong>⚠️ 門檻/上限：</strong>${escapeHtml(c.cap || '無特殊限制')}</div>
+                ${warnBlock}
+                ${eventsHtml}
+                <div class="rec-detail" style="margin-top:4px;"><strong>📌 條件說明：</strong>${escapeHtml(c.condition || '無')}</div>
+                <div class="rec-source">📖 來源：<a href="${escapeHtml(c.source_url)}" target="_blank">${escapeHtml(c.source_blog)}</a></div>
+            </div>`;
         }
 
         function handleSend() {
@@ -267,40 +362,57 @@
             appendMessage('user', escapeHtml(text));
             userInput.value = '';
 
-            const data = searchBestCards(text);
+            const searchResult = searchAllMatchedCards(text);
+            const { query, amount, allMatches } = searchResult;
 
-            if (!data.cards || data.cards.length === 0) {
-                appendMessage('bot', `💡 找不到與「${escapeHtml(data.query)}」完全符合的加碼，建議使用一般消費無腦刷（如國泰 CUBE 卡或玉山 Unicard 1%~3%）。`);
+            if (!allMatches || allMatches.length === 0) {
+                appendMessage('bot', `💡 找不到與「${escapeHtml(query)}」完全符合的加碼，建議使用一般消費無腦刷（如國泰 CUBE 卡或玉山 Unicard 1%~3%）。`);
                 return;
             }
 
-            let calcNotice = data.amount ? `<span style="color:#6ee7b7; font-weight:bold;">（已依金額 $${data.amount.toLocaleString()} 元進行回饋試算）</span>` : '';
-            let html = `<div>💡 針對 <strong>「${escapeHtml(data.query)}」</strong> 付款${calcNotice}，為您推薦以下最優卡片（已排除新戶限定優惠）：</div>`;
+            const searchId = 'search_' + Date.now();
+            CURRENT_SEARCH_CACHE[searchId] = {
+                matches: allMatches,
+                amount: amount,
+                renderedCount: 5
+            };
 
-            data.cards.forEach((c, idx) => {
-                const copySummary = `${c.bank} ${c.card_name} - ${c.cashback_display} (${c.matched_channel}) | 門檻: ${c.cap}`;
-                const warnBlock = c.warning ? `<div class="rec-warning">${escapeHtml(c.warning)}</div>` : '';
-                const calcBlock = c.estimated_reward ? `<div class="rec-calc">💰 消費 $${data.amount.toLocaleString()} 元，預估可拿約 ${c.estimated_reward} 元/點！</div>` : '';
+            const top5 = allMatches.slice(0, 5);
+            let calcNotice = amount ? `<span style="color:#6ee7b7; font-weight:bold;">（已依金額 $${amount.toLocaleString()} 元與你的權益等級試算）</span>` : '';
+            let html = `<div>💡 針對 <strong>「${escapeHtml(query)}」</strong> 付款${calcNotice}，為您推薦以下最優卡片：</div>`;
 
-                html += `
-                <div class="rec-card">
-                    <button class="copy-btn" title="複製卡片資訊" onclick="copyCardInfo(this, '${escapeHtml(copySummary)}')">
-                        <i class="fa-regular fa-copy"></i>
-                    </button>
-                    <div class="rec-title">
-                        <span>Top ${idx + 1}：${escapeHtml(c.bank)} ${escapeHtml(c.card_name)} <span class="type-tag">${escapeHtml(c.reward_type)}</span></span>
-                        <span class="rate-badge">${escapeHtml(c.cashback_display)}</span>
-                    </div>
-                    ${calcBlock}
-                    <div class="rec-detail"><strong>🎯 通路：</strong>${escapeHtml(c.matched_channel)}</div>
-                    <div class="rec-detail"><strong>⏱️ 期限：</strong>${escapeHtml(c.valid_period)} (${escapeHtml(c.period_tag)})</div>
-                    <div class="rec-detail"><strong>⚠️ 門檻/上限：</strong>${escapeHtml(c.cap || '無特殊限制')}</div>
-                    ${warnBlock}
-                    <div class="rec-detail"><strong>📌 條件說明：</strong>${escapeHtml(c.condition || '無')}</div>
-                    <div class="rec-source">📖 來源：<a href="${escapeHtml(c.source_url)}" target="_blank">${escapeHtml(c.source_blog)}</a></div>
-                </div>`;
+            top5.forEach((c, idx) => {
+                html += renderCardItem(c, idx, amount);
             });
+
+            if (allMatches.length > 5) {
+                const remaining = allMatches.length - 5;
+                html += `
+                <div id="more_container_${searchId}">
+                    <button class="more-cards-btn" onclick="showMoreCards('${searchId}')">
+                        <i class="fa-solid fa-chevron-down"></i> 查看更多卡片推薦（還有 ${remaining} 張卡）
+                    </button>
+                </div>`;
+            }
+
             appendMessage('bot', html);
+        }
+
+        function showMoreCards(searchId) {
+            const cache = CURRENT_SEARCH_CACHE[searchId];
+            if (!cache) return;
+
+            const container = document.getElementById(`more_container_${searchId}`);
+            if (!container) return;
+
+            const remainingCards = cache.matches.slice(cache.renderedCount);
+            let extraHtml = '';
+            remainingCards.forEach((c, idx) => {
+                extraHtml += renderCardItem(c, cache.renderedCount + idx, cache.amount);
+            });
+
+            container.innerHTML = extraHtml;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function sendQuick(kw) { userInput.value = kw; handleSend(); }
