@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💳 信用卡付款小幫手 | GitHub Pages 免費版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #0b1120;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent: #10b981;
+            --warning-bg: #451a03;
+            --warning-border: #d97706;
+            --warning-text: #fde68a;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        html, body { height: 100%; height: 100dvh; background-color: var(--bg-color); color: var(--text-color); overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .chat-container { width: 100%; max-width: 850px; height: 100%; height: 100dvh; background: #0f172a; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+        @media (min-width: 640px) {
+            .chat-container { height: 94dvh; border-radius: 16px; border: 1px solid var(--border-color); }
+        }
+        .chat-header { padding: 14px 18px; background: #1e293b; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .header-info { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; flex-shrink: 0; }
+        .status-subtitle { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .status-dot { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; display: inline-block; }
+        .header-actions { display: flex; gap: 8px; }
+        .header-actions button { background: #334155; color: #e2e8f0; border: none; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; display: flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .header-actions button:hover { background: #475569; }
+        .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; -webkit-overflow-scrolling: touch; }
+        .message { display: flex; max-width: 90%; }
+        .message.bot { align-self: flex-start; }
+        .message.user { align-self: flex-end; }
+        .bubble { padding: 12px 16px; border-radius: 14px; line-height: 1.55; font-size: 0.94rem; word-break: break-word; }
+        .message.bot .bubble { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); }
+        .message.user .bubble { background: var(--primary); color: white; border-bottom-right-radius: 4px; }
+        .rec-card { background: #182234; border: 1px solid #3b82f6; border-radius: 10px; padding: 12px 14px; margin-top: 10px; position: relative; }
+        .rec-title { font-weight: 700; font-size: 1.02rem; color: #60a5fa; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding-right: 32px; }
+        .rate-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.82rem; font-weight: bold; }
+        .type-tag { font-size: 0.75rem; color: #cbd5e1; background: #334155; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+        .rec-detail { font-size: 0.87rem; color: #cbd5e1; margin-bottom: 4px; }
+        .rec-warning { background: var(--warning-bg); border-left: 3px solid var(--warning-border); color: var(--warning-text); padding: 6px 10px; border-radius: 4px; font-size: 0.82rem; margin: 6px 0; }
+        .rec-calc { background: #064e3b; color: #6ee7b7; border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 4px; font-size: 0.88rem; font-weight: bold; margin: 6px 0; }
+        .rec-source { font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+        .rec-source a { color: #93c5fd; text-decoration: none; }
+        .copy-btn { position: absolute; top: 10px; right: 10px; background: #334155; color: #94a3b8; border: none; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        .copy-btn:hover { background: #475569; color: white; }
+        .quick-chips { padding: 8px 14px; background: #111827; border-top: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; overflow-x: auto; white-space: nowrap; flex-shrink: 0; }
+        .quick-chips::-webkit-scrollbar { display: none; }
+        .chip { background: #1e293b; color: #93c5fd; border: 1px solid #334155; padding: 5px 12px; border-radius: 16px; font-size: 0.82rem; cursor: pointer; flex-shrink: 0; }
+        .chip:hover { background: #2563eb; color: white; }
+        .chat-input-area { padding: 12px 14px; background: #1e293b; display: flex; gap: 8px; flex-shrink: 0; }
+        .chat-input-area input { flex: 1; background: #0f172a; border: 1px solid var(--border-color); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.95rem; outline: none; }
+        .chat-input-area input:focus { border-color: #3b82f6; }
+        .chat-input-area button { background: var(--primary); color: white; border: none; width: 46px; border-radius: 10px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .chat-input-area button:hover { background: var(--primary-hover); }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="header-info">
+                <div class="avatar"><i class="fa-solid fa-credit-card"></i></div>
+                <div>
+                    <h2>信用卡付款小幫手</h2>
+                    <p class="status-subtitle"><span class="status-dot"></span> GitHub Pages 雲端隨身版 | 排除新戶</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="clear-chat-btn" title="清空對話"><i class="fa-solid fa-trash-can"></i> 清空</button>
+            </div>
+        </header>
+
+        <main class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                <div class="bubble">
+                    👋 你好！我是你的<strong>信用卡付款小幫手 (GitHub 隨身版)</strong>。<br><br>
+                    此版本完全運行在你的瀏覽器中，<strong>免安裝、免伺服器、手機秒開</strong>！
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>✨ <strong>自動排除新戶獨享/首刷禮</strong>（只推薦人人可拿的常態回饋）</li>
+                        <li>⚠️ <strong>超商/繳費/全聯陷阱提示</strong>（提醒銀行除外不回饋規定）</li>
+                        <li>💵 <strong>支援消費金額試算</strong>（例如輸入「<code>蝦皮 3000</code>」或「<code>加油 1000</code>」）</li>
+                    </ul>
+                    <br>請點選下方快捷按鈕，或直接在下方輸入想付款的通路！
+                </div>
+            </div>
+        </main>
+
+        <div class="quick-chips">
+            <span style="font-size:0.78rem; color:var(--text-muted); flex-shrink:0;">快捷：</span>
+            <button class="chip" onclick="sendQuick('LINE Pay')">📱 LINE Pay</button>
+            <button class="chip" onclick="sendQuick('日本實體')">🇯🇵 日本實體/日幣</button>
+            <button class="chip" onclick="sendQuick('蝦皮購物 3000')">🛒 蝦皮 3000</button>
+            <button class="chip" onclick="sendQuick('超商 7-11 繳費')">🏪 超商/繳費/全聯</button>
+            <button class="chip" onclick="sendQuick('中油 加油 1000')">⛽ 加油 1000</button>
+            <button class="chip" onclick="sendQuick('Uber Eats 外送')">🛵 外送/影音</button>
+            <button class="chip" onclick="sendQuick('隨便無腦刷')">💳 一般消費無腦刷</button>
+        </div>
+
+        <footer class="chat-input-area">
+            <input type="text" id="user-input" placeholder="輸入通路或包含金額，例如：LINE Pay、日本藥妝、蝦皮 3000..." autocomplete="off">
+            <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </footer>
+    </div>
+
+    <script>
+        // 內嵌結構化最新卡片資料庫
+        let CARDS_DB = [];
+
+        // 載入 cards.json (同目錄)
+        async function loadDatabase() {
+            try {
+                const res = await fetch('data/cards.json');
+                if (res.ok) {
+                    CARDS_DB = await res.json();
+                }
+            } catch (e) {
+                console.log('Using fallback DB');
+            }
+        }
+        loadDatabase();
+
+        const CHANNEL_ALIASES = {
+            "line pay": ["line pay", "linepay", "lp", "連線支付"],
+            "街口": ["街口", "街口支付", "jkopay"],
+            "日本": ["日本", "日幣", "japan", "jp", "唐吉訶德", "驚安殿堂", "bic camera", "友都八喜", "松本清", "大國藥妝", "quicpay"],
+            "韓國": ["韓國", "韓元", "korea", "kr", "首爾", "olive young"],
+            "海外": ["海外", "國外", "外幣", "跨境", "國外實體", "歐盟"],
+            "蝦皮": ["蝦皮", "shopee", "蝦皮購物", "蝦幣"],
+            "momo": ["momo", "富邦媒", "momo購物"],
+            "pchome": ["pchome", "24h購物"],
+            "酷澎": ["酷澎", "coupang"],
+            "超商": ["超商", "便利商店", "7-11", "711", "全家", "萊爾富", "ok超商"],
+            "全聯": ["全聯", "px pay", "全支付", "福利中心"],
+            "加油": ["加油", "中油", "全國加油", "台亞", "西歐", "福懋"],
+            "外送": ["外送", "uber eats", "ubereats", "foodpanda", "熊貓"],
+            "訂房": ["訂房", "agoda", "booking", "trip.com", "klook", "kkday", "機票", "飯店"],
+            "影音": ["影音", "netflix", "spotify", "disney+", "youtube premium", "串流"],
+            "繳費": ["繳費", "水費", "電費", "瓦斯", "路邊停車", "健保費", "稅"],
+            "行動支付": ["行動支付", "apple pay", "google pay", "ap", "gp", "感應支付", "台灣pay"]
+        };
+
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const clearBtn = document.getElementById('clear-chat-btn');
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function appendMessage(sender, htmlContent) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            msgDiv.innerHTML = `<div class="bubble">${htmlContent}</div>`;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function copyCardInfo(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check" style="color:#10b981;"></i>';
+                setTimeout(() => { btn.innerHTML = orig; }, 2000);
+            });
+        }
+
+        function extractAmount(str) {
+            const match = str.match(/^(.*?)\s*[$￥]?(\d+(?:\.\d+)?)\s*(?:元|塊)?$/);
+            if (match && match[1].trim()) {
+                return { query: match[1].trim(), amount: parseFloat(match[2]) };
+            }
+            return { query: str.trim(), amount: null };
+        }
+
+        function searchBestCards(rawQuery) {
+            const { query: cleanQuery, amount } = extractAmount(rawQuery);
+            const q = cleanQuery.toLowerCase();
+
+            let searchTerms = new Set([q]);
+            for (const [key, aliases] of Object.entries(CHANNEL_ALIASES)) {
+                if (q.includes(key)) {
+                    aliases.forEach(a => searchTerms.add(a));
+                }
+            }
+
+            let matches = [];
+            for (const card of CARDS_DB) {
+                const rewardType = card.reward_type || (card.bank === '上海商銀' || card.bank === '遠東商銀' ? '現金折抵帳單' : '點數回饋');
+                for (const ch of card.channels || []) {
+                    if (ch.is_new_customer_only) continue;
+
+                    const chKeywords = (ch.keywords || []).map(k => k.toLowerCase());
+                    const chName = (ch.channel_name || '').toLowerCase();
+
+                    let matched = false;
+                    for (const term of searchTerms) {
+                        if (chKeywords.some(kw => kw.includes(term) || term.includes(kw)) || chName.includes(term)) {
+                            matched = true;
+                            break;
+                        }
+                    }
+
+                    if (!matched && (q.includes("一般") || q.includes("無腦") || q.includes("隨便"))) {
+                        if (chKeywords.some(kw => kw.includes("一般") || kw.includes("無腦"))) {
+                            matched = true;
+                        }
+                    }
+
+                    if (matched) {
+                        let warning = null;
+                        if (["7-11", "全家", "超商", "繳費", "水電"].some(k => q.includes(k))) {
+                            if (!card.card_name.includes("小小兵") && !card.card_name.includes("台新")) {
+                                warning = "⚠️ 注意：多數信用卡一般回饋排除超商直刷或公用事業水電繳費，請確認有特別列入加碼才刷。";
+                            }
+                        }
+                        if (q.includes("全聯")) {
+                            if (!card.card_name.includes("小小兵") && !chName.includes("全支付")) {
+                                warning = "⚠️ 注意：全聯福利中心通常排除一般信用卡回饋，建議綁定指定行動支付。";
+                            }
+                        }
+
+                        let estReward = null;
+                        if (amount && amount > 0) {
+                            estReward = Math.round(amount * (ch.cashback_rate / 100.0) * 10) / 10;
+                        }
+
+                        matches.push({
+                            card_name: card.card_name,
+                            bank: card.bank,
+                            reward_type: rewardType,
+                            matched_channel: ch.channel_name,
+                            cashback_rate: ch.cashback_rate || 0,
+                            cashback_display: ch.cashback_display,
+                            cap: ch.cap,
+                            condition: ch.condition,
+                            warning: warning,
+                            estimated_reward: estReward,
+                            valid_period: card.valid_period,
+                            period_tag: card.period_tag,
+                            source_blog: card.source_blog,
+                            source_url: card.source_url
+                        });
+                    }
+                }
+            }
+
+            matches.sort((a, b) => b.cashback_rate - a.cashback_rate);
+            return { query: cleanQuery, amount: amount, cards: matches.slice(0, 4) };
+        }
+
+        function handleSend() {
+            const text = userInput.value.trim();
+            if (!text) return;
+            appendMessage('user', escapeHtml(text));
+            userInput.value = '';
+
+            const data = searchBestCards(text);
+
+            if (!data.cards || data.cards.length === 0) {
+                appendMessage('bot', `💡 找不到與「${escapeHtml(data.query)}」完全符合的加碼，建議使用一般消費無腦刷（如國泰 CUBE 卡或玉山 Unicard 1%~3%）。`);
+                return;
+            }
+
+            let calcNotice = data.amount ? `<span style="color:#6ee7b7; font-weight:bold;">（已依金額 $${data.amount.toLocaleString()} 元進行回饋試算）</span>` : '';
+            let html = `<div>💡 針對 <strong>「${escapeHtml(data.query)}」</strong> 付款${calcNotice}，為您推薦以下最優卡片（已排除新戶限定優惠）：</div>`;
+
+            data.cards.forEach((c, idx) => {
+                const copySummary = `${c.bank} ${c.card_name} - ${c.cashback_display} (${c.matched_channel}) | 門檻: ${c.cap}`;
+                const warnBlock = c.warning ? `<div class="rec-warning">${escapeHtml(c.warning)}</div>` : '';
+                const calcBlock = c.estimated_reward ? `<div class="rec-calc">💰 消費 $${data.amount.toLocaleString()} 元，預估可拿約 ${c.estimated_reward} 元/點！</div>` : '';
+
+                html += `
+                <div class="rec-card">
+                    <button class="copy-btn" title="複製卡片資訊" onclick="copyCardInfo(this, '${escapeHtml(copySummary)}')">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <div class="rec-title">
+                        <span>Top ${idx + 1}：${escapeHtml(c.bank)} ${escapeHtml(c.card_name)} <span class="type-tag">${escapeHtml(c.reward_type)}</span></span>
+                        <span class="rate-badge">${escapeHtml(c.cashback_display)}</span>
+                    </div>
+                    ${calcBlock}
+                    <div class="rec-detail"><strong>🎯 通路：</strong>${escapeHtml(c.matched_channel)}</div>
+                    <div class="rec-detail"><strong>⏱️ 期限：</strong>${escapeHtml(c.valid_period)} (${escapeHtml(c.period_tag)})</div>
+                    <div class="rec-detail"><strong>⚠️ 門檻/上限：</strong>${escapeHtml(c.cap || '無特殊限制')}</div>
+                    ${warnBlock}
+                    <div class="rec-detail"><strong>📌 條件說明：</strong>${escapeHtml(c.condition || '無')}</div>
+                    <div class="rec-source">📖 來源：<a href="${escapeHtml(c.source_url)}" target="_blank">${escapeHtml(c.source_blog)}</a></div>
+                </div>`;
+            });
+            appendMessage('bot', html);
+        }
+
+        function sendQuick(kw) { userInput.value = kw; handleSend(); }
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSend(); });
+
+        clearBtn.addEventListener('click', () => {
+            chatMessages.innerHTML = '';
+            appendMessage('bot', '🧹 對話紀錄已清空，請隨時輸入想查詢的通路或金額！');
+        });
+    </script>
+</body>
+</html>
